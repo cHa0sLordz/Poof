@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ti:app xmlns:ti="http://ti.appcelerator.org">
+    <guid>e5787799-f882-42fb-b2f7-e4c3a097d9c9</guid>
+    <!-- These values are edited/maintained by Titanium Developer -->
+<id>net.chaoslordz.poof</id>
+<name>Poof</name>
+<version>1.0</version>
+<publisher>C-L|cHa0s</publisher>
+<url>http://www.chaos-lordz.net</url>
+<description>Hide your apps in the dock.</description>
+<icon>icon.png</icon>
+<copyright>2011 by C-L|cHa0s</copyright>
+    <!-- Window Definition - these values can be edited -->
+    <window>
+        <id>initial</id>
+        <title>Poof!</title>
+        <url>app://index.html</url>
+        <width>300</width>
+        <max-width>3000</max-width>
+        <min-width>0</min-width>
+        <height>170</height>
+        <max-height>3000</max-height>
+        <min-height>0</min-height>
+        <fullscreen>false</fullscreen>
+        <resizable>false</resizable>
+        <chrome scrollbars="false">true</chrome>
+        <maximizable>false</maximizable>
+        <minimizable>true</minimizable>
+        <closeable>true</closeable>
+    </window>
+</ti:app>

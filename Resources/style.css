@@ -1,0 +1,22 @@
+/**
+
+
+**/
+#droptext{
+	position: absolute;
+	top: 140px;
+	left: 50px;
+	cursor: default;
+}
+#droparea {
+position: absolute;
+top: 0px;
+left: 0px;
+height: 170px;
+width: 300px;
+opacity: 0;
+cursor: default;
+}
+body{
+	background: url(dropimage.png) no-repeat 90px 10px;
+}

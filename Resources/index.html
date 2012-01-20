@@ -1,0 +1,92 @@
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="style.css">
+		<script type="text/javascript" src="jquery.js"></script>
+		<script type="text/javascript">
+			// alle 60 sekunden auf eine neue Version Prüfen
+			AppUpdMonitor = Titanium.UpdateManager.startMonitor(Titanium.App.getID(), updateApp(), 60000);
+
+			function updateApp() {
+
+				//check for a new update
+				Titanium.UpdateManager.onupdate = function(details) {
+					//prompt a message to confirm the new update
+					mess = 'Die Version: ' + details.version + ' ist verfügbar. Möchtest du jetzt auf diese Version Aktualisieren?';
+					con = confirm(mess);
+					if(con) {
+						// this function installs the new updated version of my app
+						Titanium.UpdateManager.installAppUpdate(details);
+					}
+				};
+			}
+
+			// Eigenschafen des Fensters setzen
+			var FrmMain = Titanium.UI.getCurrentWindow();
+			FrmMain.setTopMost(true);
+
+			function ShowOrHideApp() {
+
+				//$("#droptext").html($('#droparea').val());
+				var Programmpfad = Titanium.Filesystem.getFile($('#droparea').val() + "/Contents/Info.plist");
+
+				var Dateiinhalt = Programmpfad.read();
+
+				var Suchstring = Dateiinhalt.toString().search("<key>LSUIElement</key>\n<string>1</string>");
+				//try{
+				if(Suchstring != -1) {
+					$("#droptext").html("The icon retruns to your dock.");
+					Programmpfad.write(Dateiinhalt.toString().replace('<key>LSUIElement</key>\n<string>1</string>\n</dict>\n</plist>', '</dict>\n</plist>'));
+				} else {
+					$("#droptext").html("*Poof* your icon floats away ...");
+					Programmpfad.write(Dateiinhalt.toString().replace('</dict>\n</plist>', '<key>LSUIElement</key>\n<string>1</string>\n</dict>\n</plist>'));
+				}
+
+				//}catch(err){alert('test');}
+
+			}
+
+			// wenn das DOM Geladen ist
+			$(function() {
+
+				// leere die Droparea beim Programmstart
+				// sicherheitshalber
+				$('#droparea').val('');
+
+				// Timer welcher die Droparea überwacht
+				var myTimer = setInterval(function() {
+
+					// Wenn die Droparea einen Wert hat
+					// nur apps zum droppen zulassen!
+					if($('#droparea').val().substr($('#droparea').val().length - 4, $('#droparea').val().length) == ".app") {
+						ShowOrHideApp();
+					}
+
+					// leere die Droparea wieder
+					$('#droparea').val('');
+
+				}, 250);
+			});
+			// Rechte Maustaste Deaktivieren
+			function click(e) {
+				if(!e)
+					e = window.event;
+				if((e.type && e.type == "contextmenu") || (e.button && e.button == 2) || (e.which && e.which == 3)) {
+					return false;
+				}
+			}
+
+			if(document.layers)
+				document.captureEvents(Event.MOUSEDOWN);
+			document.onmousedown = click;
+			document.oncontextmenu = click;
+			// Rechte Maustaste Deaktivieren ende
+		</script>
+	</head>
+	<body>
+		<form>
+			<textarea id="droparea">
+			</textarea>
+			<span id="droptext">Drag your Application here!</span>
+		</form>
+	</body>
+</html>
